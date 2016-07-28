@@ -92,32 +92,26 @@
 				<br>
 				<br>
 				<h3>Update User:</h3>
-				<form action="updateUser.jsp" target="hidden-form">
-					 <p class="vtu">Value to Update:</p><br><select name="ToUpdate">
-						<option value="uname">Username</option>
-						<option value="email">Email</option>
-						<option value="promocode">Promo code</option>
-					</select> New Value: <input type="text" name="NewValue">
-					
-					User To
-					Update: <Select name="uname"><%
-					for(int i=0; i<users.length;i++){%>
-						<option value=<%="\""+users[i]+"\"" %>><%=users[i]%></option>
-						<%}%></Select>
-<input type="submit" name="btnSubmit" onclick="setTimeout(reload, 1000)" value="Update User">
-				</form>
-				<br>
-				<br>
-				<table cellpadding="30">
+				<form action="modifyTable.jsp">
+<table>
 					<%
+					DBConnection.getConnection();
+					
 						String[][] ArrayTable = DBConnection.tableToArray("logins");
+						response.addCookie(new Cookie ("table", "logins"));
+						
+						int valuecount = 0;
+						%><tr><%
+						for(int columns = 0; columns < ArrayTable[0].length; columns++){
+							%><th><%=ArrayTable[0][columns]%></th><%
+						}
+						%></tr><tr><%
+							for (int rows = 0; rows < ArrayTable.length-1; rows++) {
 
-						for (int rows = 0; rows < ArrayTable.length; rows++) {
-					%><tr>
+								for (int columns = 0; columns < ArrayTable[0].length; columns++) {
+							%><td><input type="text" name="value<%=valuecount%>" value=<%=ArrayTable[rows+1][columns]%>></td>
 						<%
-							for (int columns = 0; columns < ArrayTable[0].length; columns++) {
-						%><th><%=ArrayTable[rows][columns]%></th>
-						<%
+							valuecount++;
 							}
 						%>
 					</tr>
@@ -125,6 +119,7 @@
 						}
 					%>
 				</table>
+				<input type="submit" value="submit"></form>
 				<br>
 				<br>
 
