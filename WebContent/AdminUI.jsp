@@ -293,6 +293,7 @@
 						value="Delete Comment">
 				</form>
 				<br/>
+				
 				<br/>
 				<table cellpadding="30">
 					
@@ -314,6 +315,10 @@
 				</table>
 				<br/>
 				<br/>
+
+
+
+			
 			</div>
 		</div>
 		<!-- .container --> </main>

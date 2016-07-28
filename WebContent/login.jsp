@@ -201,19 +201,13 @@ $().ready(function() {
 				</div>
 				<div class="login">
 					<h1>Login</h1>
-
-					<form name="loginForm" onSubmit="return formValidation();"
-						method="post" action="verifyUser.jsp">
-						<ul>
-							<li><label for="userid">User ID:</label></li>
-							<li><input type="text" name="uname" size="30" /></li>
-							<li><label for="passid">Password:</label></li>
-							<li><input type="password" name="password" size="30" /></li>
-							<li><a href="forgot.html">Forgot Password?</a></li>
-							<li><input type="submit" name="Login" value="Submit" /></li>
-
-						</ul>
-					</form>
+<form action="checkLogin.jsp" method="post">
+	Email: <input type="text" name="email">
+	<br>
+	Password: <input type="password" name="password">
+	<br>
+	<input type="submit" name="login" value="login">
+</form>
 				</div>
 
 			</div>
