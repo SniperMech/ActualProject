@@ -15,6 +15,13 @@
 
 </head>
 <body>
+<%
+if ((session.getAttribute("UserID") == null)){
+	%><jsp:forward page="/AdminAccessFail"/><%
+}else if(((int)session.getAttribute("UserID") != 1)){
+	%><jsp:forward page="/AdminAccessFail"/><%
+}%>
+
 	<div id="site-content">
 		<div class="site-header">
 			<div class="container">
@@ -45,6 +52,9 @@
 						<li class="menu-item home current-menu-item"><a
 							href="about.html">About</a></li>
 						<li class="menu-item"><a href="login.jsp">Login/Register</a></li>
+						<form action = "LogoutServlet" method = "post">
+						<button value="Logout" name="Logout"></button>
+						</form>
 					</ul>
 					<!-- .menu -->
 

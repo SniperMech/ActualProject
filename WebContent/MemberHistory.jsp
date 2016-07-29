@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@page import = "Model.*" %>
@@ -8,11 +9,11 @@
 <title>View Transaction History</title>
 </head>
 <body>
-<form action="MemberHistoryServlet">
-<input type="text" name="UserID">
-<input type="submit" value="Submit">
-</form>
-<br/>
+<%
+if (((String)request.getAttribute("checked") != "checked")){
+	%><jsp:forward page="/MemberHistoryServlet"/><%
+	}%>
+
 <%
 if (request.getAttribute("TransactionHistory") != null && (boolean)request.getAttribute("Success")){
 	Object[] History = (Object[])request.getAttribute("TransactionHistory");
