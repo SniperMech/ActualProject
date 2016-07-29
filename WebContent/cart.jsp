@@ -1,3 +1,5 @@
+<%@ page import="java.sql.*, SQLCommands.*, Model.*, java.util.*"%>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -5,7 +7,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
 		
-		<title>Ecommerce Video Game | Cart</title>
+		<title>SP Game Store</title>
 
 		<!-- Loading third party fonts -->
 		<link href="http://fonts.googleapis.com/css?family=Roboto:400,700|" rel="stylesheet" type="text/css">
@@ -24,34 +26,31 @@
 
 
 	<body>
-		
 		<div id="site-content">
 			<div class="site-header">
 				<div class="container">
 					<a href="index.html" id="branding">
 						<img src="images/logo.png" alt="" class="logo">
 						<div class="logo-text">
-							<h1 class="site-title">Company name</h1>
-							<small class="site-description">Tagline goes here</small>
+							<h1 class="site-title">SP Game Store</h1>
+							<small class="site-description">Affordable Games At Your
+							Doorstep</small>
 						</div>
 					</a> <!-- #branding -->
 
 					<div class="right-section pull-right">
 						<a href="cart.html" class="cart"><i class="icon-cart"></i> 0 items in cart</a>
-						<a href="#">My Account</a>
-						<a href="#">Logout <small>(John Smith)</small></a>
 					</div> <!-- .right-section -->
 
 					<div class="main-navigation">
 						<button class="toggle-menu"><i class="fa fa-bars"></i></button>
 						<ul class="menu">
-							<li class="menu-item home current-menu-item"><a href="index.html"><i class="icon-home"></i></a></li>
-							<li class="menu-item"><a href="products.html">Accessories</a></li>
-							<li class="menu-item"><a href="products.html">Promotions</a></li>
-							<li class="menu-item"><a href="products.html">PC</a></li>
-							<li class="menu-item"><a href="products.html">Playstation</a></li>
-							<li class="menu-item"><a href="products.html">Xbox</a></li>
-							<li class="menu-item"><a href="products.html">Wii</a></li>
+						<li class="menu-item"><a href="index.html"><i
+								class="icon-home"></i></a></li>
+						<li class="menu-item home current-menu-item"><a
+							href="products.jsp">Products</a></li>
+						<li class="menu-item"><a href="about.html">About</a></li>
+						<li class="menu-item"><a href="login.jsp">Login/Register</a></li>
 						</ul> <!-- .menu -->
 						<div class="search-form">
 							<label><img src="images/icon-search.png"></label>
@@ -84,82 +83,66 @@
 								</tr>
 							</thead>
 							<tbody>
+							<%
+						//CartItemBean item = (CartItemBean)request.getAttribute("addItems");
+						ArrayList<CartItemBean> carts = (ArrayList<CartItemBean>)session.getAttribute("addSuccess");
+						
+						if (carts!= null){
+							double total = 0;
+							for (CartItemBean cart: carts){
+								total = total + cart.getTotal();
+						%>
 								<tr>
 									<td class="product-name">
 										<div class="product-thumbnail">
-											<img src="dummy/cart-thumb-1.jpg" alt="">
+											<img src="<%=cart.getLogoURL() %>" alt="" width="200px" height="200px">
 										</div>
 										<div class="product-detail">
-											<h3 class="product-title">GTA V</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure nobis architecto dolorum, alias laborum sit odit, saepe expedita similique eius enim quasi obcaecati voluptates, autem eveniet ratione veniam omnis modi.</p>
+											<h3 class="product-title"><%=cart.getTitle() %></h3>
+											<p><%=cart.getDescription() %></p>
 										</div>
 									</td>
-									<td class="product-price">$150.00</td>
+									<td class="product-price">$<%=""+cart.getPrice() %></td>
 									<td class="product-qty">
-										<select name="#">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-										</select>
+									<form method="post" action="addCart">
+									<input name="Stock" placeholder="<%=cart.getStock()%>" style="width:80px;">
+									<input type="hidden" name="GameID" value="<%=cart.getGameID()%>" />
+									<input type="hidden" name="Title" value="<%=cart.getTitle()%>" />
+									<input type="hidden" name="Descrition" value="<%=cart.getDescription()%>" />
+									<input type="hidden" name="logoURL" value="<%=cart.getLogoURL()%>" />
+									<input type="hidden" name="price" value="<%=cart.getPrice()%>" />
+									
+									<input type="submit" style="visibility: hidden; width:10px;" />
+									</form>
 									</td>
-									<td class="product-total">$150.00</td>
-									<td class="action"><a href="#"><i class="fa fa-times"></i></a></td>
+									<td class="product-total">$<%=cart.getTotal() %></td>
+									<td class="action">
+									<form method="get" action="deleteCart">
+									<input type="hidden" name="GameID" value="<%=cart.getGameID()%>">
+									<button type="submit"><i class="fa fa-times"></i></button></td>		
+									</form>
 								</tr>
-								<tr>
-									<td class="product-name">
-										<div class="product-thumbnail">
-											<img src="dummy/cart-thumb-2.jpg" alt="">
-										</div>
-										<div class="product-detail">
-											<h3 class="product-title">Big Game Hunter</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure nobis architecto dolorum, alias laborum sit odit, saepe expedita similique eius enim quasi obcaecati voluptates, autem eveniet ratione veniam omnis modi.</p>
-										</div>
-									</td>
-									<td class="product-price">$150.00</td>
-									<td class="product-qty">
-										<select name="#">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-										</select>
-									</td>
-									<td class="product-total">$150.00</td>
-									<td class="action"><a href="#"><i class="fa fa-times"></i></a></td>
-								</tr>
-								<tr>
-									<td class="product-name">
-										<div class="product-thumbnail">
-											<img src="dummy/cart-thumb-3.jpg" alt="">
-										</div>
-										<div class="product-detail">
-											<h3 class="product-title">Meal Gear Solid</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure nobis architecto dolorum, alias laborum sit odit, saepe expedita similique eius enim quasi obcaecati voluptates, autem eveniet ratione veniam omnis modi.</p>
-										</div>
-									</td>
-									<td class="product-price">$150.00</td>
-									<td class="product-qty">
-										<select name="#">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-										</select>
-									</td>
-									<td class="product-total">$150.00</td>
-									<td class="action"><a href="#"><i class="fa fa-times"></i></a></td>
-								</tr>
+						<%			
+
+						}
+						%>	<p><%=total %></p>
+						<% 
+							}
+						%>
+						
 							</tbody>
 						</table> <!-- .cart -->
-
-						<div class="cart-total">
-							<p><strong>Subtotal:</strong> $650.00</p>
-							<p><strong>Shipment:</strong> $15.00</p>
-							<p class="total"><strong>Total</strong><span class="num">$665.00</span></p>
-							<p>
-								<a href="#" class="button muted">Continue Shopping</a>
-								<a href="#" class="button">Finalize and pay</a>
-							</p>
-						</div> <!-- .cart-total -->
 						
+						<div class="cart-total"> 
+							<p>
+								<a href="products.jsp" class="button muted">Continue Shopping</a>
+								<a href="#" class="button">Checkout</a>
+							</p>
+							
+						</div> 
+
+						<!-- .cart-total -->
+
 					</div>
 				</div> <!-- .container -->
 			</main> <!-- .main-content -->
@@ -254,6 +237,12 @@
 		<script src="js/jquery-1.11.1.min.js"></script>
 		<script src="js/plugins.js"></script>
 		<script src="js/app.js"></script>
+		
+		<script>
+			function myFunction() {
+    		alert("I am an alert box!");
+			}
+		</script>
 		
 	</body>
 

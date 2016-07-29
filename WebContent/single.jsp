@@ -1,5 +1,12 @@
+<%@ page import="java.sql.*, SQLCommands.*"%>
 <!DOCTYPE html>
 <html lang="en">
+		<%
+		String logincon=request.getParameter("GameID");
+		DBConnection.getConnection();
+		String[] productValues = DBConnection.productPage(request.getParameter("GameID"));
+		
+	%>
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +28,6 @@
 		<![endif]-->
 
 	</head>
-
 
 	<body>
 		
@@ -56,7 +62,7 @@
 					<div class="breadcrumbs">
 						<div class="container">
 							<a href="index.html">Home</a>
-							<a href="products.html">Products</a>
+							<a href="products.jsp">Products</a>
 							
 						</div>
 					</div>
@@ -66,40 +72,55 @@
 			<main class="main-content">
 				<div class="container">
 					<div class="page">
-						
 						<div class="entry-content">
 							<div class="row">
 								<div class="col-sm-6 col-md-4">
 									<div class="product-images">
 										<figure class="large-image">
-											<a href="dummy/rsz_final_fantasy_xiii_logo.jpg"><img src="dummy/rsz_1final_fantasy_xiii_logo.jpg" alt=""></a>
+											<a href="<%out.println(productValues[12]);%>"><img src="<%out.println(productValues[11]);%>" alt=""></a>
 										</figure>
 										<div class="thumbnails">
-											<a href="dummy/hqdefault.jpg"><img src="dummy/rsz_hqdefault.jpg" alt=""></a>
-											<a href="dummy/ff.jpg"><img src="dummy/rsz_1ff.jpg" alt=""></a>
-											<a href="dummy/final-fantasy-xiii-gedosato-3.jpg"><img src="dummy/rsz_final-fantasy-xiii-gedosato-3.jpg" alt=""></a>
+											<a href="<%out.println(productValues[8]);%>"><img src="<%out.println(productValues[5]);%>" alt=""></a>
+											<a href="<%out.println(productValues[9]);%>"><img src="<%out.println(productValues[6]);%>" alt=""></a>
+											<a href="<%out.println(productValues[10]);%>"><img src="<%out.println(productValues[7]);%>" alt=""></a>
 										</div>
 									</div>
 								</div>
 								<div class="col-sm-6 col-md-8">
-									<h2 class="entry-title">Final Fantasy XIII</h2>
-									<small class="price">$69.50</small>
+									<h2 class="entry-title"><%out.println(productValues[1]);%></h2>
+									<small class="price">$<%out.println(productValues[3]);%></small>
 
-									<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-									<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae.</p>
-									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod.</p>
+									<p><%out.println(productValues[13]);%></p>
+									<br>
+									<p class="preowned"><%out.println(productValues[4]);%></p>
+
 
 									<div class="addtocart-bar">
-										<form action="#">
-											<label for="#">Quantity</label>
-											<select name="#">
-												<option value="1">1</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
+										<form method="post" action="addCart">
+											 <label for="#">Quantity</label>
+											<select name="Stock">
+											<%
+											int[] quantity = new int[Integer.parseInt(productValues[14])];
+											for(int i=0; i<quantity.length; i++){
+											quantity[i] = 1 + i;
+											%>
+											<option value="<%=quantity[i]%>">
+											<%
+												out.println(quantity[i]);
+											%>
+											</option>
+											<%
+											}
+											%>
 											</select>
-											<input type="submit" value="Add to cart">
+											
+											<input type="hidden" name="GameID" value="<%=productValues[0]%>" />
+											<input type="hidden" name="Title" value="<%=productValues[1]%>" />
+											<input type="hidden" name="Descrition" value="<%=productValues[13]%>" />
+											<input type="hidden" name="logoURL" value="<%=productValues[11]%>" />
+											<input type="hidden" name="price" value="<%=productValues[3]%>" />
+											<input type="submit" value="SubmitBtn">
 										</form>
-
 										<div class="social-links square">
 											<strong>Share</strong>
 											<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
@@ -113,13 +134,14 @@
 						</div>
 						
 						<section>
+
 							<header class="comment">
+
 								<form action="addComment.jsp" method="post">
-
-									
 									<h1>Reviews</h1>
-
+									<input type="hidden" name="GameID" value=<%=request.getParameter("GameID")%>>
 									<div class="rating">
+										
     									<span><input type="radio" name="rating" id="str5" value="5"><label for="str5"></label></span>
   									 	<span><input type="radio" name="rating" id="str4" value="4"><label for="str4"></label></span>
     									<span><input type="radio" name="rating" id="str3" value="3"><label for="str3"></label></span>
@@ -127,13 +149,46 @@
    										<span><input type="radio" name="rating" id="str1" value="1"><label for="str1"></label></span>
 									</div>
 									<fieldset class="comment-fieldset">
-									<h2>Name:</h2><input type="text" name="GameID" size="20" /><br><br>
-									
 									<h2>Comment:</h2><textarea class="text" rows="4" cols="75" name="Comment" ></textarea>
 									</fieldset>
-									<br></br>
+									<br>
+									</br>
 									<input class="" type="submit" value="Submit">
 								</form>
+								<div class="media">
+                <%
+                Class.forName("com.mysql.jdbc.Driver");
+        		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/gggameshop?user=root&password=root");
+                String sql2="Select * from comments where GameID=?";
+        		PreparedStatement pms=conn.prepareStatement(sql2);
+        		pms.setInt(1,Integer.parseInt(request.getParameter("GameID")));
+        		pms.execute();
+        		ResultSet rs2 = pms.getResultSet();
+        		if(!rs2.next())
+        			out.println("<p>Comments have been disabled &#x2639</p>");
+        		rs2.previous();
+        		while(rs2.next()){
+        			int commentid = rs2.getInt("CommentID");
+
+            		String comment=rs2.getString("Comment");
+            		
+                %> 
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            
+                        </h4><%=comment %>
+                        <p></p>
+           
+                        	&#x2605
+                        <%
+                        }
+                        %>
+                        
+                        <br />
+                        <hr />
+                    </div>
+              
+                </div>
 							</header>
 						</section>
 						
@@ -185,5 +240,4 @@
 		<script src="js/app.js"></script>
 		
 	</body>
-
 </html>

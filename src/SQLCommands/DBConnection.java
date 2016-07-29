@@ -308,4 +308,31 @@ public class DBConnection {
 		return(rs2.next());
 	}
 	
+	public static String[] productPage(String GameID) throws Exception {
+		pstmt = conn.prepareStatement("Select * from gggameshop.games WHERE GameID=?");
+		pstmt.setString(1, GameID);
+		rs = pstmt.executeQuery();
+		
+		rs.next();
+		String[] productArray = {
+				rs.getString("GameID"), 
+				rs.getString("Title"),
+				rs.getString("Company"),
+				rs.getString("price"),
+				rs.getString("Preowned"),
+				rs.getString("icon1URL"),
+				rs.getString("icon2URL"),
+				rs.getString("icon3URL"),
+				rs.getString("image1URL"),
+				rs.getString("image2URL"),
+				rs.getString("image3URL"),
+				rs.getString("logoURL"),
+				rs.getString("logo2URL"),
+				rs.getString("Description"),
+				rs.getString("stock")};
+		
+		return productArray; 
+		
+	}
+	
 }
