@@ -8,7 +8,7 @@
 </head>
 <body onload="pastSubmission()">
 
-<form name="register" onsubmit="validateForm()" method="post"><!-- action="RegisterUserServlet" -->
+<form name="register" action="RegisterUserServlet" onsubmit="return validateForm()" method="post">
 
 Username: <input name="uname" id="uname" type="text">
 <br/><br/>

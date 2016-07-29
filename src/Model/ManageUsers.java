@@ -79,4 +79,28 @@ public class ManageUsers {
 		}
 	}
 	
+	public int checkLogin(String email, String password) throws Exception{
+		password = JavaMethods.hashPassword(password);
+		System.out.println(password);
+		System.out.println(email);
+		Connection conn = JavaMethods.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement("Select UserID from gggameshopv2.users where PassHash=? and Email=?");
+		pstmt.setString(1, password);
+		pstmt.setString(2, email);
+		ResultSet rs = pstmt.executeQuery();
+		if (rs.next()){
+			int UserID = rs.getInt("UserID");
+			pstmt = conn.prepareStatement("Select email from gggameshopv2.userbanned where Email=?");
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			if (!rs.next()){
+				return UserID;
+			}else{
+				return -1;
+			}
+		}else{
+			return 0;
+		}
+	}
+	
 }

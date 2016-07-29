@@ -35,7 +35,8 @@ public class JavaMethods {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		md.update(password.getBytes("UTF-8"));
 		byte digest[] = md.digest();
-		return digest.toString();
+		String passString = new String(digest);
+		return passString;
 	}
 	
 	public static boolean checkString(String Check, String ToCheck){
