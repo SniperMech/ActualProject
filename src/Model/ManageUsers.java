@@ -81,8 +81,6 @@ public class ManageUsers {
 	
 	public int checkLogin(String email, String password) throws Exception{
 		password = JavaMethods.hashPassword(password);
-		System.out.println(password);
-		System.out.println(email);
 		Connection conn = JavaMethods.getConnection();
 		PreparedStatement pstmt = conn.prepareStatement("Select UserID from gggameshopv2.users where PassHash=? and Email=?");
 		pstmt.setString(1, password);

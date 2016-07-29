@@ -43,7 +43,6 @@ public class LoginServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("UserID", UserID);
-			System.out.println(UserID);
 			if(UserID > 1){
 				
 				request.setAttribute("display", "Login Successful!");
