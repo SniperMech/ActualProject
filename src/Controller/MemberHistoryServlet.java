@@ -31,7 +31,18 @@ public class MemberHistoryServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int UserID = Integer.parseInt(request.getParameter("UserID"));
+		
+		if (request.getSession().getAttribute("UserID")==null){
+			request.setAttribute("display", "Please login to access this page.");
+			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+			rd.forward(request, response);
+		}
+		int UserID = (int)request.getSession().getAttribute("UserID");
+		if (UserID <=0){
+			request.setAttribute("display", "Please login to access this page.");
+			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+			rd.forward(request, response);
+		}
 		users User = new users();
 		User.setUserID(UserID);
 		
@@ -43,6 +54,7 @@ public class MemberHistoryServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		request.setAttribute("checked", "checked");
 		RequestDispatcher rd = request.getRequestDispatcher("MemberHistory.jsp");
 		rd.forward(request, response);
 		
