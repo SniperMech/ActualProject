@@ -7,6 +7,7 @@ public class users {
 	private String Address;
 	private int Number;
 	private String PassHash;
+	private String Reason;
 	
 	public users(){
 		super();
@@ -67,5 +68,11 @@ public class users {
 
 	public void setPassHash(String passHash) {
 		PassHash = passHash;
+	}
+	public String getReason() {
+		return Reason;
+	}
+	public void setReason(String reason) {
+		Reason = reason;
 	}
 }

@@ -171,4 +171,39 @@ public class ManageUsers {
 			return false;
 		}
 	}
+	public boolean banUser(users user) throws Exception{
+		Connection conn = JavaMethods.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement("select UserID from gggameshopv2.users where email=?");
+		pstmt.setString(1, user.getEmail());
+		ResultSet rs =pstmt.executeQuery();
+		
+		if(rs.next()){
+			int UserID = rs.getInt("UserID");
+			pstmt = conn.prepareStatement("insert into gggameshopv2.userbanned values (?,?)");
+			pstmt.setInt(1, UserID);
+			pstmt.setString(2, user.getReason());
+			pstmt.executeUpdate();
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public boolean unbanUser(users user) throws Exception{
+		Connection conn = JavaMethods.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement("select UserID from gggameshopv2.users where email=?");
+		pstmt.setString(1, user.getEmail());
+		ResultSet rs =pstmt.executeQuery();
+		
+		if(rs.next()){
+			int UserID = rs.getInt("UserID");
+			pstmt = conn.prepareStatement("delete from gggameshopv2.userbanned where UserID=?");
+			pstmt.setInt(1, UserID);
+			pstmt.executeUpdate();
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }
