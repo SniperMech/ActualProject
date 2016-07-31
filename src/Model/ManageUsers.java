@@ -88,8 +88,8 @@ public class ManageUsers {
 		ResultSet rs = pstmt.executeQuery();
 		if (rs.next()){
 			int UserID = rs.getInt("UserID");
-			pstmt = conn.prepareStatement("Select email from gggameshopv2.userbanned where Email=?");
-			pstmt.setString(1, email);
+			pstmt = conn.prepareStatement("Select UserID from gggameshopv2.userbanned where UserID=?");
+			pstmt.setInt(1, UserID);
 			rs = pstmt.executeQuery();
 			if (!rs.next()){
 				return UserID;
@@ -100,5 +100,75 @@ public class ManageUsers {
 			return 0;
 		}
 	}
-	
+	public users getProfileValues(users user) throws Exception{
+		Connection conn = JavaMethods.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement("select email, Address, number from gggameshopv2.users where UserID=?");
+		pstmt.setInt(1, user.getUserID());
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		users UserDetails = new users();
+		UserDetails.setEmail(rs.getString("email"));
+		UserDetails.setNumber(rs.getInt("number"));
+		UserDetails.setAddress(rs.getString("address"));
+		return UserDetails;
+	}
+	public boolean updateUserEmail(users user) throws Exception{
+		
+		Connection conn = JavaMethods.getConnection();
+		String email = user.getEmail();
+		int UserID = user.getUserID();
+		
+		PreparedStatement pstmt = conn.prepareStatement("select email from gggameshopv2.users where email=?");
+		pstmt.setString(1, email);
+		ResultSet rs = pstmt.executeQuery();
+		if (!rs.next()){
+			pstmt = conn.prepareStatement("update gggameshopv2.users set email=? where UserID=?");
+			pstmt.setString(1, email);
+			pstmt.setInt(2, UserID);
+			pstmt.executeUpdate();
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public boolean updateUserNumber(users user) throws Exception{
+		Connection conn = JavaMethods.getConnection();
+		int number = user.getNumber();
+		int UserID = user.getUserID();
+		
+		PreparedStatement pstmt = conn.prepareStatement("select Number from gggameshopv2.users where Number=?");
+		pstmt.setInt(1, number);
+		ResultSet rs = pstmt.executeQuery();
+		if (!rs.next()){
+			pstmt = conn.prepareStatement("update gggameshopv2.users set Number=? where UserID=?");
+			pstmt.setInt(1, number);
+			pstmt.setInt(2, UserID);
+			pstmt.executeUpdate();
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	public boolean updateUserAddress(users user) throws Exception{
+		
+		Connection conn = JavaMethods.getConnection();
+		String address = user.getAddress();
+		int UserID = user.getUserID();
+		
+		PreparedStatement pstmt = conn.prepareStatement("select address from gggameshopv2.users where address=?");
+		pstmt.setString(1, address);
+		ResultSet rs = pstmt.executeQuery();
+		if (!rs.next()){
+			pstmt = conn.prepareStatement("update gggameshopv2.users set address=? where UserID=?");
+			pstmt.setString(1, address);
+			pstmt.setInt(2, UserID);
+			pstmt.executeUpdate();
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }
