@@ -1,7 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Model.CartItemBean;
-
+import model.*;
 /**
- * Servlet implementation class deleteCart
+ * Servlet implementation class GetUserInfo
  */
-@WebServlet("/deleteCart")
-public class deleteCart extends HttpServlet {
+@WebServlet("/GetUserInfo")
+public class GetUserInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public deleteCart() {
+    public GetUserInfo() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,23 +32,6 @@ public class deleteCart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		HttpSession session = request.getSession(true);
-		String GameID = request.getParameter("GameID");
-		
-		ArrayList<CartItemBean> addCart = (ArrayList<CartItemBean>) session.getAttribute("addSuccess");
-		if(addCart != null){
-			for(int i=0; i<addCart.size();i++){
-				CartItemBean cart = addCart.get(i);
-					if(cart.getGameID().equals(GameID)){
-						addCart.remove(cart);
-					}
-
-			}
-		}
-		 session.setAttribute("addSuccess", addCart);
-		 RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
-		 rd.forward(request, response);
-		
 	}
 
 	/**
@@ -58,7 +39,23 @@ public class deleteCart extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
+		HttpSession session = request.getSession();
+		int UserID = Integer.parseInt(request.getParameter("UserID"));
+		ManageUsers manager = new ManageUsers();
+		users action = new users();
+		System.out.println("From GetUserInfo:");
+		System.out.println(UserID);
+		try {
+			action = manager.userInfo(UserID);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		session.setAttribute("userinfo", action);
+		RequestDispatcher rd = request.getRequestDispatcher("checkout.jsp");
+		rd.forward(request, response);
 	}
 
 }

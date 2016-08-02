@@ -93,8 +93,6 @@
 									<p><%out.println(productValues[13]);%></p>
 									<br>
 									<p class="preowned"><%out.println(productValues[4]);%></p>
-
-
 									<div class="addtocart-bar">
 										<form method="post" action="addCart">
 											 <label for="#">Quantity</label>

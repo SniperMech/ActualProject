@@ -2,6 +2,8 @@ package Model;
 
 import java.sql.*;
 
+import model.users;
+
 public class ManageUsers {
 
 	public boolean insertUser(users RegisteredUser) throws Exception{
@@ -205,5 +207,39 @@ public class ManageUsers {
 		else{
 			return false;
 		}
+	}
+	
+	public users userInfo (int UserID) throws Exception{
+		users list = new users();
+		  
+		  try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+		  String connURL ="jdbc:mysql://localhost/gggameshopv2?user=root&password=root";
+		  Connection conn = DriverManager.getConnection(connURL);
+		  String sqlStr = "Select UserName, Email, Address, Number FROM gggameshopv2.users where UserID=?";
+		  PreparedStatement pstmt = conn.prepareStatement(sqlStr);
+		  System.out.println("check this out first:");
+		  System.out.println(UserID);
+		  pstmt.setInt(1, UserID);
+		  ResultSet rs = pstmt.executeQuery();
+		  while (rs.next()){
+					String userName = rs.getString("UserName");
+					String email = rs.getString("Email");
+					String address = rs.getString("Address");
+					int number = rs.getInt("Number");
+					list = new users(userName,email,address,number);
+					System.out.println(UserID);						
+		  }
+		  
+		  return list;
+			} catch (NumberFormatException | ClassNotFoundException ex) {
+				// TODO Auto-generated catch block
+				
+				System.out.println(ex);
+				ex.printStackTrace();
+				return null;
+				
+			}
 	}
 }

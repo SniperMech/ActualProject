@@ -45,6 +45,8 @@ public class addCart extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		HttpSession session = request.getSession();
+		int checkLogin = (int)session.getAttribute("UserID");
+		if(checkLogin > 1){
 		String GameID = request.getParameter("GameID");
 		String Title = request.getParameter("Title");
 		String Description = request.getParameter("Description");
@@ -90,6 +92,9 @@ public class addCart extends HttpServlet {
 		} catch (NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		}else{
+			response.sendRedirect("login.jsp");
 		}
 	}
 

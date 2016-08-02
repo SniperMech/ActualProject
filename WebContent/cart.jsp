@@ -85,12 +85,13 @@
 							<tbody>
 							<%
 						//CartItemBean item = (CartItemBean)request.getAttribute("addItems");
+							int UserID = (int)session.getAttribute("UserID");
+							System.out.println("This is the UserID from cart : "+ UserID);
 						ArrayList<CartItemBean> carts = (ArrayList<CartItemBean>)session.getAttribute("addSuccess");
 						
 						if (carts!= null){
 							double total = 0;
 							for (CartItemBean cart: carts){
-								total = total + cart.getTotal();
 						%>
 								<tr>
 									<td class="product-name">
@@ -125,7 +126,7 @@
 						<%			
 
 						}
-						%>	<p><%=total %></p>
+						%>
 						<% 
 							}
 						%>
@@ -136,7 +137,10 @@
 						<div class="cart-total"> 
 							<p>
 								<a href="products.jsp" class="button muted">Continue Shopping</a>
-								<a href="#" class="button">Checkout</a>
+								<form method="post" action="GetUserInfo">
+								<input type="hidden" name="UserID" value="<%=UserID%>">
+								<button type="submit"><a href="checkout.jsp" class="button">Checkout</a></button>
+								</form>
 							</p>
 							
 						</div> 

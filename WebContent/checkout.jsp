@@ -64,6 +64,29 @@
 				<div class="container">
 					<div class="page">
 						<table class="cart">
+						<%users action = (users)session.getAttribute("userinfo");%>
+							<thead>
+								<tr>
+									<th class="product-name">Name</th>
+									<th class="product-price">Email</th>
+									<th class="product-qty">Address</th>
+									<th class="product-total">Phone Number</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="product-name">
+										<div class="product-detail">
+											<h3 class="product-title"><%=action.getUserName()%></h3>
+										</div>
+									</td>
+									<td class="product-price">$<%=""+action.getEmail() %></td>
+									<td class="product-qty"><%=action.getAddress()%></td>
+									<td class="product-total">$<%=action.getNumber() %></td>
+								</tr>
+							</tbody>
+						</table> <!-- .cart -->
+						<table class="cart">
 							<thead>
 								<tr>
 									<th class="product-name">Product Name</th>
@@ -76,7 +99,7 @@
 							<%
 						//CartItemBean item = (CartItemBean)request.getAttribute("addItems");
 						ArrayList<CartItemBean> carts = (ArrayList<CartItemBean>)session.getAttribute("addSuccess");
-						
+						int UserID = (int)session.getAttribute("UserID");
 						if (carts!= null){
 							double total = 0;
 							for (CartItemBean cart: carts){
@@ -93,41 +116,40 @@
 									<td class="product-qty"><%=cart.getStock()%></td>
 									<td class="product-total">$<%=cart.getTotal() %></td>
 								</tr>
-							</tbody>
-							<tbody>
-						<%			
-
-						}
-						%>	<tr><div><p class="total"><strong>Total: $<%=total %></strong></p></div></tr>
-						<% 
-							}
-						%>
-						
+						<%}
+							%>
 							</tbody>
 						</table> <!-- .cart -->
-						<form>
-								<ul>
-								<li><label>Name:</label></li>
-								<li><input type="text" name="name"></li>
-								<li><label>Credit number:</label></li>
-								<li><input type="text" name="name"></li>
-								<li><label>Expiration Date:</label>
-								<li><input type="text" name="email"></li>
-								<li><label>Security Code:</label>
-								<li><input type="text" name="contact"></li>
-								</ul>
+						<table class="cart">
+							<thead>
+								<tr>
+									<th class="product-name">Name on Credit Card</th>
+									<th class="product-price">Credit Number</th>
+									<th class="product-qty">Expiration Date</th>
+									<th class="product-total">Security Code</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+								<form>
+								<td><input type="text" name="name" placeholder="John Cena"></td>
+								<td><input type="text" name="cardNumber" placeholder="0000 0000 0000 00000"></td>
+								<td><input type="text" name="expiration" placeholder="MM/YY"></td>
+								<td><input type="text" name="code" placeholder="***"></td>
 								</form>
+								</tr>
+							</tbody>
+						</table>
 						<div class="cart-total">
 							<p>
-								<a href="products.jsp" class="button muted">Continue Shopping</a><a>     </a>
+								<a href="products.jsp" class="button muted">Continue Shopping</a>
 								<form method="get" action="insertTransaction">
-								<input type="hidden" name="userid" value="1">
-								<input type="hidden" name="gameid" value="1">
-								<input type="hidden" name="quantity" value="1">
-								<input type="hidden" name="price" value="1">
-								<button type="submit"><a href="#" class="button">Confirm Purchase</a></button>
+								<input type="hidden" name="userid" value="<%=UserID%>">
+								<button type="submit"><a class="button">Confirm Purchase</a></button>
 								</form>
 							</p>
+							<p class="total"><strong>Total: $<%=total %></strong></p>
+							<%} %>
 						</div> 
 					</div>
 				</div> <!-- .container -->

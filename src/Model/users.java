@@ -21,6 +21,15 @@ public class users {
 		this.Number = number;
 		this.PassHash = passHash;
 	}
+	
+	public users(String userName, String email, String address, int number) {
+		super();
+
+		UserName = userName;
+		Email = email;
+		Address = address;
+		Number = number;
+	}
 		
 	public int getUserID() {
 		return UserID;
