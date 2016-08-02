@@ -2,7 +2,6 @@ package Model;
 
 public class CartItemBean {
 
-
 	private String GameID;
 	private String Title;
 	private String Description;
@@ -85,5 +84,4 @@ public class CartItemBean {
 	}
 	
 	
-
 }
