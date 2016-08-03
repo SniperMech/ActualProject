@@ -215,32 +215,6 @@
 
 	<div class="overlay"></div>
 
-	<div class="auth-popup popup">
-		<a href="#" class="close"><i class="fa fa-close"></i></a>
-		<div class="row">
-			<div class="col-md-6">
-				<h2 class="section-title">Login</h2>
-				<form action="#">
-					<input type="text" placeholder="Username..."> <input
-						type="password" placeholder="Password..."> <input
-						type="submit" value="Login">
-				</form>
-			</div>
-			<!-- .column -->
-			<div class="col-md-6">
-				<h2 class="section-title">Create an account</h2>
-				<form action="#">
-					<input type="text" placeholder="Username..."> <input
-						type="text" placeholder="Email address..."> <input
-						type="submit" value="register">
-				</form>
-			</div>
-			<!-- .column -->
-		</div>
-		<!-- .row -->
-	</div>
-	<!-- .auth-popup -->
-
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/app.js"></script>
