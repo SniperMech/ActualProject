@@ -12,12 +12,12 @@ public class DBConnection {
 	
 	public static void getConnection() throws Exception{
 		Class.forName("com.mysql.jdbc.Driver");
-		conn = DriverManager.getConnection("jdbc:mysql://localhost/gggameshop?user=root&password=root");
+		conn = DriverManager.getConnection("jdbc:mysql://localhost/gggameshopv2?user=root&password=root");
 	}
 	
 	
 	public static boolean checkLogin(String uname, String Enteredpsswd) throws Exception{
-		pstmt=conn.prepareStatement("SELECT psswd FROM gggameshop.logins where uname=?");	
+		pstmt=conn.prepareStatement("SELECT psswd FROM gggameshopv2.logins where uname=?");	
 		pstmt.setString(1,uname); 
 		rs=pstmt.executeQuery();
 		if(rs.next()==true){
@@ -28,7 +28,7 @@ public class DBConnection {
 		}
 	}
 	public static int autoIncrement(String IDType, String TableName) throws SQLException{
-		pstmt=conn.prepareStatement("SELECT "+IDType+" FROM gggameshop."+TableName+";");
+		pstmt=conn.prepareStatement("SELECT "+IDType+" FROM gggameshopv2."+TableName+";");
 		rs=pstmt.executeQuery();
 		int i;
 		for(i=1 ; rs.next()&&i==rs.getInt(IDType) ; i++ ){
@@ -38,7 +38,7 @@ public class DBConnection {
 	}
 	
 	public static String[] getGenres() throws SQLException{
-		pstmt=conn.prepareStatement("SELECT Genre FROM gggameshop.genre");
+		pstmt=conn.prepareStatement("SELECT Genre FROM gggameshopv2.genre");
 		rs=pstmt.executeQuery();
 		
 		ArrayList<String> result = new ArrayList<String>();
@@ -50,7 +50,7 @@ public class DBConnection {
 	
 	
 	public static String[] getGenreIDs() throws SQLException{
-		pstmt=conn.prepareStatement("SELECT GenreID FROM gggameshop.genre");
+		pstmt=conn.prepareStatement("SELECT GenreID FROM gggameshopv2.genre");
 		rs=pstmt.executeQuery();
 		
 		ArrayList<String> result = new ArrayList<String>();
@@ -72,7 +72,7 @@ public class DBConnection {
 	}
 	
 	public static String[] getValues(String Column) throws SQLException{
-		pstmt=conn.prepareStatement("SELECT "+Column+" FROM gggameshop.games");
+		pstmt=conn.prepareStatement("SELECT "+Column+" FROM gggameshopv2.games");
 		rs=pstmt.executeQuery();
 		
 		ArrayList<String> result = new ArrayList<String>();
@@ -84,7 +84,7 @@ public class DBConnection {
 	
 	public static String[] getSpecificGames(String Column, String preowned, String genre, String search) throws SQLException{
 		if(search!=""){
-			pstmt=conn.prepareStatement("SELECT "+Column+" FROM gggameshop.games Ga WHERE Title=?");
+			pstmt=conn.prepareStatement("SELECT "+Column+" FROM gggameshopv2.games Ga WHERE Title=?");
 			pstmt.setString(1, search);
 		}
 		
@@ -95,7 +95,7 @@ public class DBConnection {
 				pstmt.setString(2, preowned);
 			}
 			else{
-				pstmt=conn.prepareStatement("SELECT "+Column+" FROM gggameshop.games Ga WHERE Preowned=?");
+				pstmt=conn.prepareStatement("SELECT "+Column+" FROM gggameshopv2.games Ga WHERE Preowned=?");
 				pstmt.setString(1,preowned);
 			}
 		}
@@ -104,7 +104,7 @@ public class DBConnection {
 			pstmt.setString(1,genre);
 		}
 		else{
-			pstmt=conn.prepareStatement("SELECT "+Column+" FROM gggameshop.games Ga");
+			pstmt=conn.prepareStatement("SELECT "+Column+" FROM gggameshopv2.games Ga");
 		}
 		rs=pstmt.executeQuery();
 		
@@ -131,7 +131,7 @@ public class DBConnection {
 		InputStream logo2file = new FileInputStream(new File(logo2));
 		int ID=autoIncrement("GameID", "games");
 		
-		pstmt=conn.prepareStatement("insert into gggameshop.games(GameID, Title, Company, Date, Description, Price,"
+		pstmt=conn.prepareStatement("insert into gggameshopv2.games(GameID, Title, Company, Date, Description, Price,"
 				+ "icon1, icon2, icon3, image1, image2, image3, logo, logo2, Preowned) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
 		pstmt.setInt(1, ID);
 		pstmt.setString(2, Title);
@@ -150,68 +150,68 @@ public class DBConnection {
 		pstmt.setString(15, preowned);
 		pstmt.executeUpdate();
 		for(int i=0;i<Genres.length;i++){
-			pstmt=conn.prepareStatement("insert into gggameshop.gamegenre(GameID, GenreID) values(?,?);");
+			pstmt=conn.prepareStatement("insert into gggameshopv2.gamegenre(GameID, GenreID) values(?,?);");
 			pstmt.setInt(1, ID);
 			pstmt.setInt(2, Genres[i]);
 			pstmt.executeUpdate();
 		}
 	}
 	public static void updateProduct(String ToUpdate, String NewValue, String Title) throws SQLException{
-		pstmt=conn.prepareStatement("UPDATE gggameshop.games SET "+ToUpdate+"=? WHERE Title=?;");
+		pstmt=conn.prepareStatement("UPDATE gggameshopv2.games SET "+ToUpdate+"=? WHERE Title=?;");
 		pstmt.setString(1, NewValue);
 		pstmt.setString(2, Title);
 		pstmt.executeUpdate();
 	}
 	public static void updateProductImage(String ToUpdate, String NewImage, String Title) throws SQLException, FileNotFoundException{
-		pstmt=conn.prepareStatement("UPDATE gggameshop.games SET "+ToUpdate+"=? WHERE Title=?;");
+		pstmt=conn.prepareStatement("UPDATE gggameshopv2.games SET "+ToUpdate+"=? WHERE Title=?;");
 		InputStream image = new FileInputStream(new File(NewImage));
 		pstmt.setBlob(1,image);
 		pstmt.setString(2, Title);
 		pstmt.executeUpdate();
 	}
 	public static void deleteProduct(String Game) throws SQLException{
-		pstmt=conn.prepareStatement("DELETE FROM gggameshop.games WHERE Title=?;");
+		pstmt=conn.prepareStatement("DELETE FROM gggameshopv2.games WHERE Title=?;");
 		pstmt.setString(1, Game);
 		pstmt.executeUpdate();
 	}
 	
 	
 	public static void insertUser(String uname, String psswd, String email) throws SQLException{
-		pstmt=conn.prepareStatement("insert into gggameshop.logins(uname, psswd, email) values(?,?,?);");
+		pstmt=conn.prepareStatement("insert into gggameshopv2.logins(uname, psswd, email) values(?,?,?);");
 		pstmt.setString(1, uname);
 		pstmt.setString(2, psswd);
 		pstmt.setString(3, email);
 		pstmt.executeUpdate();
 	}
 	public static void updateUser(String ToUpdate, String NewValue, String uname) throws SQLException{
-		pstmt=conn.prepareStatement("UPDATE gggameshop.logins SET "+ToUpdate+"=? WHERE uname=?;");
+		pstmt=conn.prepareStatement("UPDATE gggameshopv2.logins SET "+ToUpdate+"=? WHERE uname=?;");
 		pstmt.setString(1, NewValue);
 		pstmt.setString(2, uname);
 		pstmt.executeUpdate();
 	}
 	public static void deleteUser(String uname) throws SQLException{
-		pstmt=conn.prepareStatement("DELETE FROM gggameshop.logins WHERE uname=?;");
+		pstmt=conn.prepareStatement("DELETE FROM gggameshopv2.logins WHERE uname=?;");
 		pstmt.setString(1, uname);
 		pstmt.executeUpdate();
 	}
 	
 	public static void insertGenre(String Genre) throws SQLException{
 		int ID=autoIncrement("GenreID", "genre");
-		pstmt=conn.prepareStatement("insert into gggameshop.genre(GenreID, Genre) values(?,?);");
+		pstmt=conn.prepareStatement("insert into gggameshopv2.genre(GenreID, Genre) values(?,?);");
 		pstmt.setInt(1, ID);
 		pstmt.setString(2, Genre);
 		pstmt.executeUpdate();
 	}
 	
 	public static void deleteGenre(String Genre) throws SQLException{
-		pstmt=conn.prepareStatement("DELETE FROM gggameshop.genre WHERE Genre=?;");
+		pstmt=conn.prepareStatement("DELETE FROM gggameshopv2.genre WHERE Genre=?;");
 		pstmt.setString(1, Genre);
 		pstmt.executeUpdate();
 	}
 	
 	public static void checkPromoCode(String promocode, String uname) throws SQLException{
 		if (promocode=="helloworld"){
-			pstmt=conn.prepareStatement("UPDATE gggameshop.logins SET promocode=1 WHERE uname=?;");
+			pstmt=conn.prepareStatement("UPDATE gggameshopv2.logins SET promocode=1 WHERE uname=?;");
 			pstmt.setString(1, uname);
 			pstmt.executeUpdate();
 		}
@@ -232,14 +232,14 @@ public class DBConnection {
 	}
 	public static void insertComment(int GameID, String Comment) throws SQLException{
 		
-		pstmt=conn.prepareStatement("SELECT CommentID FROM gggameshop.comments WHERE GameID=?");
+		pstmt=conn.prepareStatement("SELECT CommentID FROM gggameshopv2.comments WHERE GameID=?");
 		pstmt.setInt(1, GameID);
 		rs=pstmt.executeQuery();
 		int ID;
 		for(ID=1 ; rs.next()&&ID==rs.getInt("CommentID") ; ID++ ){
 		}
 		
-		pstmt=conn.prepareStatement("insert into gggameshop.comments(CommentID, Comment, GameID) values(?,?, ?);");
+		pstmt=conn.prepareStatement("insert into gggameshopv2.comments(CommentID, Comment, GameID) values(?,?, ?);");
 		
 		pstmt.setInt(1, ID);
 		pstmt.setString(2, Comment);
@@ -248,14 +248,14 @@ public class DBConnection {
 	}
 	
 	public static void deleteComment(int GameID, int CommentID) throws SQLException{
-		pstmt=conn.prepareStatement("DELETE FROM gggameshop.comments WHERE GameID=? AND CommentID=?;");
+		pstmt=conn.prepareStatement("DELETE FROM gggameshopv2.comments WHERE GameID=? AND CommentID=?;");
 		pstmt.setInt(1, GameID);
 		pstmt.setInt(2, CommentID);
 		pstmt.executeUpdate();
 	}
 	
 	public static String[][] tableToArray(String TableName) throws SQLException, IOException{
-		pstmt=conn.prepareStatement("SELECT * FROM gggameshop."+TableName+";");
+		pstmt=conn.prepareStatement("SELECT * FROM gggameshopv2."+TableName+";");
 		rs=pstmt.executeQuery();
 		ResultSetMetaData rsmd = rs.getMetaData();
 		int columns = rsmd.getColumnCount();
@@ -285,7 +285,7 @@ public class DBConnection {
 	}
 	
 	public static String getQuestion(String uname) throws Exception{
-		pstmt=conn.prepareStatement("Select * from gggameshop.questions where uname=?");
+		pstmt=conn.prepareStatement("Select * from gggameshopv2.questions where uname=?");
 		pstmt.setString(1, uname);
 		String question;
 		rs=pstmt.executeQuery();
@@ -301,7 +301,7 @@ public class DBConnection {
 		return question;
 	}
 	public static boolean getAnswer(String UserAnswer, String uname) throws Exception{
-		pstmt=conn.prepareStatement("Select * from gggameshop.questions where uname=? and Answer=?");
+		pstmt=conn.prepareStatement("Select * from gggameshopv2.questions where uname=? and Answer=?");
 		pstmt.setString(1, uname);
 		pstmt.setString(2, UserAnswer);
 		ResultSet rs2=pstmt.executeQuery();
@@ -309,7 +309,7 @@ public class DBConnection {
 	}
 	
 	public static String[] productPage(String GameID) throws Exception {
-		pstmt = conn.prepareStatement("Select * from gggameshop.games WHERE GameID=?");
+		pstmt = conn.prepareStatement("Select * from gggameshopv2.games WHERE GameID=?");
 		pstmt.setString(1, GameID);
 		rs = pstmt.executeQuery();
 		
