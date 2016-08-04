@@ -1,4 +1,4 @@
-package controller;
+package Controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
-import model.*;
+import Model.*;
 
 /**
  * Servlet implementation class addCart

@@ -1,4 +1,4 @@
-package controller;
+package Controller;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.*;
+import Model.*;
 
 /**
  * Servlet implementation class BanServlet

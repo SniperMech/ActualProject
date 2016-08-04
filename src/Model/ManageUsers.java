@@ -1,9 +1,9 @@
-package model;
+package Model;
 
 import java.sql.*;
 
-import model.JavaMethods;
-import model.users;
+import Model.JavaMethods;
+import Model.users;
 
 public class ManageUsers {
 

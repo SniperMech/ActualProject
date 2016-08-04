@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*, SQLCommands.*, model.*, java.util.*, java.io.*, javax.servlet.*, java.text.*"%>
+<%@ page import="java.sql.*, SQLCommands.*, Model.*, java.util.*, java.io.*, javax.servlet.*, java.text.*"%>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
