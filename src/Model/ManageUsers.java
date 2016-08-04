@@ -1,7 +1,8 @@
-package Model;
+package model;
 
 import java.sql.*;
 
+import model.JavaMethods;
 import model.users;
 
 public class ManageUsers {
@@ -242,4 +243,5 @@ public class ManageUsers {
 				
 			}
 	}
+	
 }

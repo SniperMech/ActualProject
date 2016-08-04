@@ -1,3 +1,4 @@
+
 <%@ page import="java.sql.*, SQLCommands.*"%>
 
 
@@ -154,18 +155,17 @@
 								<%
 								String[] GameID;
 								String[] Games;
-								String[] Description;
+								
 								if(request.getParameter("preowned")==null&&
 									request.getParameter("genre")==null&&
 									request.getParameter("search2")==null){
 								GameID = DBConnection.getValues("GameID");
 								Games = DBConnection.getValues("Title");
-								Description = DBConnection.getValues("Description");
+								
 								}
 								else{
 									GameID = DBConnection.getSpecificGames("Ga.GameID", request.getParameter("preowned"), request.getParameter("genre"), request.getParameter("search2"));
 									Games = DBConnection.getSpecificGames("Title", request.getParameter("preowned"), request.getParameter("genre"), request.getParameter("search2"));
-									Description = DBConnection.getSpecificGames("Description", request.getParameter("preowned"), request.getParameter("genre"), request.getParameter("search2"));
 								}
 						for(int i=0;i<Games.length;i++){	
 										%>
@@ -176,7 +176,7 @@
 								</div>
 									<h3><%=Games[i] %></h3>
 								
-									<p><%=Description[i] %></p>
+									
 	
 								<a href="#" class="button">Add to cart</a> <a href="single.html"
 									class="button muted">Read Details</a>
@@ -214,6 +214,32 @@
 	</div>
 
 	<div class="overlay"></div>
+
+	<div class="auth-popup popup">
+		<a href="#" class="close"><i class="fa fa-close"></i></a>
+		<div class="row">
+			<div class="col-md-6">
+				<h2 class="section-title">Login</h2>
+				<form action="#">
+					<input type="text" placeholder="Username..."> <input
+						type="password" placeholder="Password..."> <input
+						type="submit" value="Login">
+				</form>
+			</div>
+			<!-- .column -->
+			<div class="col-md-6">
+				<h2 class="section-title">Create an account</h2>
+				<form action="#">
+					<input type="text" placeholder="Username..."> <input
+						type="text" placeholder="Email address..."> <input
+						type="submit" value="register">
+				</form>
+			</div>
+			<!-- .column -->
+		</div>
+		<!-- .row -->
+	</div>
+	<!-- .auth-popup -->
 
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/plugins.js"></script>

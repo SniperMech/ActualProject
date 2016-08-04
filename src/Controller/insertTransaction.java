@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import java.text.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import Model.*;
+import model.*;
 
 /**
  * Servlet implementation class insertTransaction
@@ -35,16 +35,13 @@ public class insertTransaction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		//request.getSession(false).getAttribute("addSuccess");
+
 		ArrayList<CartItemBean> carts = (ArrayList<CartItemBean>)request.getSession(false).getAttribute("addSuccess");
 		int userid = Integer.parseInt(request.getParameter("userid"));
 			for (CartItemBean cart: carts){
 		int gameid = Integer.parseInt(cart.getGameID());
 		int quantity = cart.getStock();
 		double price = cart.getPrice();
-		//int gameid = Integer.parseInt(request.getParameter("gameid"));
-		//int quantity = Integer.parseInt(request.getParameter("quantity"));
-		//double price = Double.parseDouble(request.getParameter("price"));
 	
 	    java.util.Date today = Calendar.getInstance().getTime();
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -63,7 +60,7 @@ public class insertTransaction extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.getSession(false).removeAttribute("addSuccess");
-		request.setAttribute("insertSuccess", success);
+		request.setAttribute("Success", success);
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("insertResults.jsp");
 		rd.forward(request, response); //target only use it once

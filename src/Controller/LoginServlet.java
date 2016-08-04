@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Model.*;
+import model.*;
 
 /**
  * Servlet implementation class LoginServlet
@@ -36,6 +36,8 @@ public class LoginServlet extends HttpServlet {
 		users login = new users();
 		login.setPassHash(password);
 		login.setEmail(email);
+		logDetails log = new logDetails();
+		log.insertLog(email);
 		ManageUsers LoggingIn = new ManageUsers();
 		
 		try {

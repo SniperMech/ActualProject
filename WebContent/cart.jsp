@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*, SQLCommands.*, Model.*, java.util.*"%>
+<%@ page import="java.sql.*, SQLCommands.*, model.*, java.util.*"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +23,10 @@
 		<![endif]-->
 
 	</head>
-
+<%
+if (((String)request.getAttribute("checked") != "checked")){
+	%><jsp:forward page="/SetUserAccess"/><%
+}%>
 
 	<body>
 		<div id="site-content">

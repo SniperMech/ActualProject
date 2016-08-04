@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Model.CartItemBean;
+import model.*;
 
 /**
  * Servlet implementation class deleteCart
@@ -39,6 +39,11 @@ public class deleteCart extends HttpServlet {
 		
 		ArrayList<CartItemBean> addCart = (ArrayList<CartItemBean>) session.getAttribute("addSuccess");
 		if(addCart != null){
+			//for(CartItemBean cart : addCart){//int i; i<addCart.size();i++ {CartItemBean cart = addCart.get(i);
+				//if(cart.getGameID() == GameID){
+					// addCart.remove(cart);
+			//	}
+			 //}
 			for(int i=0; i<addCart.size();i++){
 				CartItemBean cart = addCart.get(i);
 					if(cart.getGameID().equals(GameID)){
@@ -58,7 +63,6 @@ public class deleteCart extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
 	}
-
 }

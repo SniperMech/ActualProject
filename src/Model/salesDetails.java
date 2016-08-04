@@ -1,4 +1,4 @@
-package Model;
+package model;
 import java.sql.*;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;

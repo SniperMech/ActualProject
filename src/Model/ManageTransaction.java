@@ -1,8 +1,6 @@
-package Model;
+package model;
 
 import java.sql.*;
-
-import model.transaction;
 
 public class ManageTransaction {
 	
@@ -49,7 +47,7 @@ public class ManageTransaction {
 			  
 			  String sql = "Insert into gggameshopv2.transaction values(?,?,?,?,?,?)";
 			  PreparedStatement pstmtInsert = conn.prepareStatement(sql);
-			  pstmtInsert.setInt(1, cib.getTransactionID());
+			  pstmtInsert.setInt(1, JavaMethods.autoIncrement("TransactionID", "transaction"));
 			  pstmtInsert.setInt(2, cib.getUserID());
 			  pstmtInsert.setInt(3, cib.getGameID());
 			  pstmtInsert.setInt(4, cib.getQuantity());
@@ -101,4 +99,5 @@ public class ManageTransaction {
 			return 0;
 		}
 	}
+	
 }

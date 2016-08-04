@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.net.InetAddress;
 import java.sql.Connection;
@@ -19,10 +19,10 @@ public boolean insertLog (String email){
 
 		Connection conn = DriverManager.getConnection(connURL);
 		
-		String sqlstatement = "select * from gggameshopv2.users where email = ?";
+		String sqlstatement = "select * from gggameshopv2.users where Email = ?";
 		
 		String sqlstatement2 = "insert into gggameshopv2.log "
-				+ "(UserID, UserName, Email, IPaddress, LoginDateTime) values (?,?,?,?,now())";
+				+ "(UserID, UserName, Email, IPaddress, LoginDateTime) values (IFNULL(?,0),IFNULL(?,'Unknown'),IFNULL(?,'Unknown'),IFNULL(?,'Unknown'),IFNULL(now(),'Unknown'))";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sqlstatement);
 		
@@ -31,17 +31,15 @@ public boolean insertLog (String email){
 		pstmt.setString(1, email);
 		
 		ResultSet rs = pstmt.executeQuery();
-			
-		while(rs.next()){
+		if(rs.next()){
 		
 			pstmt2.setString(1, rs.getString("UserID"));
 			pstmt2.setString(2, rs.getString("UserName"));
-			pstmt2.setString(3, rs.getString("Email"));
-			String ip = InetAddress.getLocalHost().toString();
-			pstmt2.setString(4, ip);
-			pstmt2.setString(5, rs.getString("UserID"));
-			System.out.println(ip);
 		}
+		pstmt2.setString(3, email);
+		String ip = InetAddress.getLocalHost().toString();
+		pstmt2.setString(4, ip);
+		System.out.println(ip);
 		
 		int recs = pstmt2.executeUpdate();
 		return recs >0;

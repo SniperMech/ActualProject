@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 
-import Model.CartBean;
-import Model.CartItemBean;
+import model.*;
 
 /**
  * Servlet implementation class addCart
@@ -35,8 +35,10 @@ public class addCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
+
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -45,8 +47,6 @@ public class addCart extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		HttpSession session = request.getSession();
-		int checkLogin = (int)session.getAttribute("UserID");
-		if(checkLogin > 1){
 		String GameID = request.getParameter("GameID");
 		String Title = request.getParameter("Title");
 		String Description = request.getParameter("Description");
@@ -92,9 +92,6 @@ public class addCart extends HttpServlet {
 		} catch (NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		}else{
-			response.sendRedirect("login.jsp");
 		}
 	}
 
