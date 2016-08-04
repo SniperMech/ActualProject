@@ -1,17 +1,15 @@
 package model;
 import java.sql.*;
 
+
 public class CartBean {
 
-	public CartItemBean cartList (String GameID, String Title, String Description, String logoURL, String price, String stock, String total) throws SQLException{
+	public CartItemBean cartList (String GameID, String Title, String Description, String logoURL, String price, String stock, String total) throws Exception{
 		
 			  CartItemBean cart = new CartItemBean();
 			  
 			  try {
-				Class.forName("com.mysql.jdbc.Driver");
-				
-			  String connURL ="jdbc:mysql://localhost/gggameshopv2?user=root&password=root";
-			  Connection conn = DriverManager.getConnection(connURL);
+			 Connection conn = JavaMethods.getConnection();
 			  String sqlStr = "Select * from gggameshopv2.games where GameID=?";
 			  PreparedStatement pstmt = conn.prepareStatement(sqlStr);
 			  pstmt.setString(1, GameID);
@@ -42,9 +40,8 @@ public class CartBean {
 			  
 	}
 	
-	public boolean checkQuantity (String GameID, String stock) throws SQLException{
-		  String connURL ="jdbc:mysql://localhost/gggameshopv2?user=root&password=root";
-		  Connection conn = DriverManager.getConnection(connURL);
+	public boolean checkQuantity (String GameID, String stock) throws Exception{
+		Connection conn = JavaMethods.getConnection();
 		  String sqlStr = "Select * from gggameshopv2.games where GameID=?";
 		  PreparedStatement pstmt = conn.prepareStatement(sqlStr);
 		  pstmt.setString(1, GameID);

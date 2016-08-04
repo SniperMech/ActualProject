@@ -13,11 +13,7 @@ public class logDetails {
 public boolean insertLog (String email){
 
 	try {
-		Class.forName("com.mysql.jdbc.Driver");
-
-		String connURL = "jdbc:mysql://localhost/gggameshopv2?user=root&password=root";
-
-		Connection conn = DriverManager.getConnection(connURL);
+		Connection conn = JavaMethods.getConnection();
 		
 		String sqlstatement = "select * from gggameshopv2.users where Email = ?";
 		

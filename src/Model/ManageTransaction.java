@@ -41,9 +41,7 @@ public class ManageTransaction {
 	public boolean insertCheckout(transaction cib){
 		try {
 			
-			  Class.forName("com.mysql.jdbc.Driver");
-			  String connURL ="jdbc:mysql://localhost/gggameshopv2?user=root&password=root";
-			  Connection conn = DriverManager.getConnection(connURL);
+			  Connection conn = JavaMethods.getConnection();
 			  
 			  String sql = "Insert into gggameshopv2.transaction values(?,?,?,?,?,?)";
 			  PreparedStatement pstmtInsert = conn.prepareStatement(sql);
@@ -67,9 +65,7 @@ public class ManageTransaction {
 		
 		try {
 			
-			  Class.forName("com.mysql.jdbc.Driver");
-			  String connURL ="jdbc:mysql://localhost/gggameshopv2?user=root&password=root";
-			  Connection conn = DriverManager.getConnection(connURL);
+			  Connection conn = JavaMethods.getConnection();
 			  String sql = "Update gggameshopv2.games set stock = ? where GameID = ?";
 			  PreparedStatement pstmt = conn.prepareStatement(sql);
 			  pstmt.setInt(1, calculation);
@@ -82,9 +78,7 @@ public class ManageTransaction {
 	
 	public int retrieveQuantity (int gameid) throws Exception{
 		try {
-			  Class.forName("com.mysql.jdbc.Driver");
-			  String connURL ="jdbc:mysql://localhost/gggameshopv2?user=root&password=root";
-			  Connection conn = DriverManager.getConnection(connURL);
+			Connection conn = JavaMethods.getConnection();
 			  String sql = "Select * from gggameshopv2.games where GameID = ?";
 			  PreparedStatement pstmt = conn.prepareStatement(sql);
 			  pstmt.setInt(1, gameid);

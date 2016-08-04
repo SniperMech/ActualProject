@@ -12,11 +12,7 @@ public class salesDetails {
 		sales uBean = null;
 		
 	try {
-		Class.forName("com.mysql.jdbc.Driver");
-
-		String connURL = "jdbc:mysql://localhost/gggameshopv2?user=root&password=root";
-
-		Connection conn = DriverManager.getConnection(connURL);
+		Connection conn = JavaMethods.getConnection();
 		
 		String sqlstatement = "select gggameshopv2.games.GameID, gggameshopv2.games.Title, "
 				+ "gggameshopv2.games.Company, gggameshopv2.games.rawPrice, "

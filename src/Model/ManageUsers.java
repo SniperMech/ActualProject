@@ -214,10 +214,7 @@ public class ManageUsers {
 		users list = new users();
 		  
 		  try {
-			Class.forName("com.mysql.jdbc.Driver");
-			
-		  String connURL ="jdbc:mysql://localhost/gggameshopv2?user=root&password=root";
-		  Connection conn = DriverManager.getConnection(connURL);
+		  Connection conn = JavaMethods.getConnection();
 		  String sqlStr = "Select UserName, Email, Address, Number FROM gggameshopv2.users where UserID=?";
 		  PreparedStatement pstmt = conn.prepareStatement(sqlStr);
 		  System.out.println("check this out first:");
