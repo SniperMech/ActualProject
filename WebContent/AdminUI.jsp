@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="java.sql.*, SQLCommands.*"%>
+<%@ page import="java.sql.*, SQLCommands.*, Model.*, java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +21,10 @@ if ((session.getAttribute("UserID") == null)){
 }else if(((int)session.getAttribute("UserID") != 1)){
 	%><jsp:forward page="/AdminAccessFail"/><%
 }%>
+
+<%
+if ((request.getAttribute("gameslist") == null)){
+	%><jsp:forward page="/DropDownList"/><%} %>
 
 	<div id="site-content">
 		<div class="site-header">
@@ -76,10 +80,18 @@ if ((session.getAttribute("UserID") == null)){
 		<div class="container">
 			<div class="page">
 				<h1>Sales Report:</h1>
-				
+				<%ArrayList<games> gamelist = (ArrayList<games>)request.getAttribute("gameslist"); %>
 				<h3>Generate Sales</h3>
 					<form action="ObtainSalesDatabyGameID" method="POST">
-					Generate Total Sales For GameID: <input type="text" name="GameID">
+					Generate Total Sales For GameID: 
+					<select name="GameID">
+					<%for(games gameslist : gamelist){
+					%>
+					<option value = <%=gameslist.getGameID()%> >
+					<%out.println(gameslist.getTitle()); %>
+					</option>
+					<%} %>
+					</select>
 					<input type="submit" name="generate" value="generate">
 					</form>
 					<br/>
@@ -87,13 +99,15 @@ if ((session.getAttribute("UserID") == null)){
 					<br/>
 					<form action="ObtainSalesDatabyMonth" method="POST">
 					<div>Generate Specific Month's Total Sales:</div>
+					<%ArrayList<transaction> months = (ArrayList<transaction>)request.getAttribute("months");%>
+					
 					<select name="month">
-					<%for (int m = 1; m < 13; m++){
+					<%for(transaction transactionlist : months){
 					%>
-					<option value = <%=m%> > 
-					<%out.println(m);%> 
+					<option value = <%=transactionlist.getMonth()%> >
+					<%=transactionlist.getMonth() %>
 					</option>
-					<%}%>
+					<%} %>
 					</select>
 					<input type="submit" name="generate" value="generate">
 					</form>
@@ -105,23 +119,23 @@ if ((session.getAttribute("UserID") == null)){
 					<form action="CompareSalesDatabyMonth" method="POST">
 
 					<div>Choose 1st Month For Comparison:</div> <select name="month">
-					<%for (int m = 1; m < 13; m++){
+					<%for(transaction transactionlist : months){
 					%>
-					<option value = <%=m%> > 
-					<%out.println(m);%> 
+					<option value = <%=transactionlist.getMonth()%> >
+					<%=transactionlist.getMonth() %>
 					</option>
-					<%}%>
+					<%} %>
 					</select>
 					<br/>
 					<br/>
 					<br/>
 					<div>Choose 2nd Month For Comparison:</div> <select name="month2">
-					<%for (int m = 1; m < 13; m++){
+					<%for(transaction transactionlist : months){
 					%>
-					<option value = <%=m%> > 
-					<%out.println(m);%> 
+					<option value = <%=transactionlist.getMonth()%> >
+					<%=transactionlist.getMonth() %>
 					</option>
-					<%}%>
+					<%} %>
 					</select>
 
 					<input type="submit" name="generate" value="Compare">
@@ -135,6 +149,7 @@ if ((session.getAttribute("UserID") == null)){
 					<br/><br/>
 				
 				
+			
 			</div>
 		</div>
 		<!-- .container --> </main>

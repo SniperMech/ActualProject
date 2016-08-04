@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,19 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Model.*;
+import Model.games;
+import Model.salesDetails;
+import Model.transaction;
 
 /**
- * Servlet implementation class ObtainSalesDatabyGameID
+ * Servlet implementation class DropDownList
  */
-@WebServlet("/ObtainSalesDatabyGameID")
-public class ObtainSalesDatabyGameID extends HttpServlet {
+@WebServlet("/DropDownList")
+public class DropDownList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ObtainSalesDatabyGameID() {
+    public DropDownList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,8 +33,25 @@ public class ObtainSalesDatabyGameID extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+salesDetails manager = new salesDetails();
+		
+		ArrayList<games> gameslist = null;
+		ArrayList<transaction> months = null;
+		ArrayList<transaction> years = null;
+		try {
+			gameslist = manager.dropdowngames();
+			months = manager.dropDownMonths();
+			years = manager.dropDownYears();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("gameslist", gameslist);
+		request.setAttribute("months", months);
+		request.setAttribute("years", years);
+		RequestDispatcher rd = request.getRequestDispatcher("AdminUI.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -39,21 +59,7 @@ public class ObtainSalesDatabyGameID extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		
-		sales uBean = null;
-		String GameID = request.getParameter("GameID");
-		System.out.println(GameID);
-	try {
-		salesDetails sd = new salesDetails();
-		uBean = sd.gamesales(GameID);
-		
-		request.setAttribute("GameSales", uBean);
-		RequestDispatcher rd = request.getRequestDispatcher("SpecificGameSales.jsp");
-		rd.forward(request, response);
-	} catch (Exception e){
-		System.out.println(e);
-	}
+		doGet(request, response);
 	}
 
 }

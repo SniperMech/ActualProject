@@ -27,6 +27,12 @@ public class games {
 		this.Stock = stock;
 	}
 
+	public games(int gameID,String title2) {
+		Title = title2;
+		GameID = gameID;
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getGameID() {
 		return GameID;
 	}

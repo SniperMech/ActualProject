@@ -12,7 +12,11 @@ public class salesDetails {
 		sales uBean = null;
 		
 	try {
-		Connection conn = JavaMethods.getConnection();
+		Class.forName("com.mysql.jdbc.Driver");
+
+		String connURL = "jdbc:mysql://localhost/gggameshopv2?user=root&password=root";
+
+		Connection conn = DriverManager.getConnection(connURL);
 		
 		String sqlstatement = "select gggameshopv2.games.GameID, gggameshopv2.games.Title, "
 				+ "gggameshopv2.games.Company, gggameshopv2.games.rawPrice, "
@@ -122,6 +126,54 @@ public class salesDetails {
 	return uBean;
 	}	
 	
-	
+	public ArrayList<games> dropdowngames () throws Exception{
+		Connection conn = JavaMethods.getConnection();
+		String sql = "Select GameID, Title from gggameshopv2.games";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery(sql);
+		ArrayList<games> gameslist = new ArrayList<games>();
+		while(rs.next()){
+			String Title = rs.getString("Title");
+			int GameID = rs.getInt("GameID");
+			games details = new games(GameID,Title);
+			gameslist.add(details);
+			}
+		return gameslist;
+		
+	}
+	public ArrayList<transaction> dropDownMonths () throws Exception{
+		Connection conn = JavaMethods.getConnection();
+		String sql = "Select distinct extract(month from gggameshopv2.transaction.DatePurchased) from gggameshopv2.transaction";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery(sql);
+		ArrayList<transaction> TransactionList = new ArrayList<transaction>();
+		while(rs.next()){
+			transaction transaction = new transaction();
+			transaction.setMonth(rs.getString(1));
+			System.out.println(rs.getString(1));
+			System.out.println("hello");
+			TransactionList.add(transaction);
+			
+			}
+		return TransactionList;
+		
+	}
+	public ArrayList<transaction> dropDownYears () throws Exception{
+		Connection conn = JavaMethods.getConnection();
+		String sql = "extract(year from gggameshopv2.transaction.DatePurchased) from gggameshopv2.transaction";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery(sql);
+		ArrayList<transaction> TransactionList = new ArrayList<transaction>();
+		while(rs.next()){
+			transaction transaction = new transaction();
+			transaction.setYear(rs.getString(1));
+			
+			TransactionList.add(transaction);
+			
+			}
+		return TransactionList;
+		
+	}
+
 
 }
