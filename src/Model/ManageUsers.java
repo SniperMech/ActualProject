@@ -240,5 +240,13 @@ public class ManageUsers {
 				
 			}
 	}
+	public String getUserName(int UserID) throws Exception{
+		Connection conn = JavaMethods.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement("Select UserName from gggameshopv2.users where UserID=?");
+		pstmt.setInt(1, UserID);
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		return rs.getString(1);
+	}
 	
 }

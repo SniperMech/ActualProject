@@ -46,7 +46,16 @@
 							<li class="menu-item home current-menu-item"><a href="index.html"><i class="icon-home"></i></a></li>
 							<li class="menu-item"><a href="products.jsp">Products</a></li>
 							<li class="menu-item"><a href="about.html">About</a></li>
-							<li class="menu-item"><a href="login.jsp">Login/Register</a></li>
+							<li class="menu-item">
+							<%
+							if (session.getAttribute("UserName") == null){
+								%><a href="login.jsp">Login</a><%
+							}
+							else {
+								%><a href="UpdateProfileView.jsp"><%=(String)session.getAttribute("UserName")%></a><%
+							}
+							%>
+							</li>
 							
 						</ul> <!-- .menu -->
 

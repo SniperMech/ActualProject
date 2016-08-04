@@ -45,24 +45,29 @@ public class LoginServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("UserID", UserID);
-			if(UserID > 1){
-				
-				request.setAttribute("display", "Login Successful!");
-				
-				RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-				rd.forward(request, response);
-			}
-			else if(UserID == -1){
+			
+			if(UserID == -1){
 				request.setAttribute("display", "Your account has been banned.");
 				
 				RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 				rd.forward(request, response);
 			}
-			else if (UserID == 1){
-				request.setAttribute("display", "Welcome Admin!");
+			
+			else if(UserID >= 1){
+				session.setAttribute("UserName", LoggingIn.getUserName(UserID));
 				
-				RequestDispatcher rd = request.getRequestDispatcher("AdminUI.jsp");
-				rd.forward(request, response);
+				if(UserID > 1){
+					request.setAttribute("display", "Login Successful!");
+					RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+					rd.forward(request, response);
+				}
+				else if(UserID == 1){
+					request.setAttribute("display", "Welcome Admin!");
+					
+					RequestDispatcher rd = request.getRequestDispatcher("AdminUI.jsp");
+					rd.forward(request, response);
+				}
+				
 			}
 			else{
 				request.setAttribute("display", "Invalid Username/Password..");
